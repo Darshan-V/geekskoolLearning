@@ -1,5 +1,5 @@
 // retry exercise
-class MultiplicatorUnitFailure extends Error {}
+class MultiplicatorUnitFailure extends Error { }
 
 function primitiveMultiply (a, b) {
   if (Math.random() < 0.2) {
@@ -11,7 +11,7 @@ function primitiveMultiply (a, b) {
 
 function reliableMultiply (a, b) {
   // Your code here.
-  for (;;) {
+  for (; ;) {
     try {
       return primitiveMultiply(a, b)
     } catch (e) {
