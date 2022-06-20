@@ -1,3 +1,4 @@
-const a = require('./a')
-a.hello()
-console.log(a.num * 2)
+const { num, str, arr, obj, hello } = require('./a')
+hello()
+console.log(num, str, arr, obj)
+console.log(num * 2)
