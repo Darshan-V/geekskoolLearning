@@ -102,7 +102,7 @@
   const network = new Network(connections, storageFor)
   exports.bigOak = network.nodes['Big Oak']
   exports.everywhere = network.everywhere.bind(network)
-  exports.defineRequestType = network.defineRequestType.bind(network)
+  exports.defineRequestType = network.defineRequestType.bind(network) // defineRequestType method => Network class
 
   if (typeof __sandbox !== 'undefined') {
     __sandbox.handleDeps = false
