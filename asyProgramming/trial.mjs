@@ -11,3 +11,5 @@ bigOak.readStorage('food caches', caches => {
     console.log(info)
   })
 })
+
+// Asynchronous programming - relation between now and later
