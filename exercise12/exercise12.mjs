@@ -1,5 +1,5 @@
 
-function parseExpression (program) {
+function parseExpression(program) {
   program = skipSpace(program)
   let match, expr
   if (match = /^"([^"]*)"/.exec(program)) {
@@ -15,13 +15,13 @@ function parseExpression (program) {
   return parseApply(expr, program.slice(match[0].length))
 }
 
-function skipSpace (string) {
-  const first = string.search(/^(\s|#.*)*/)
+function skipSpace(string) {
+  const first = string.match(/^(\s|#.*)*/)
   if (first === -1) return ''
-  return string.slice(first)
+  return string.slice(first[0].length)
 }
 
-function parseApply (expr, program) {
+function parseApply(expr, program) {
   program = skipSpace(program)
   if (program[0] !== '(') {
     return { expr, rest: program }
@@ -42,7 +42,7 @@ function parseApply (expr, program) {
   return parseApply(expr, program.slice(1))
 }
 
-export function parse (program) {
+export function parse(program) {
   const { expr, rest } = parseExpression(program)
   if (skipSpace(rest).length > 0) {
     throw new SyntaxError('Unexpected text after program')
@@ -53,9 +53,9 @@ export function parse (program) {
 //    args: [{type: "word", name: "a"},
 //           {type: "value", value: 10}]}
 
-const specialForms = Object.create(null)
+export const specialForms = Object.create(null)
 
-function evaluate (expr, scope) {
+export function evaluate(expr, scope) {
   if (expr.type === 'value') {
     return expr.value
   } else if (expr.type === 'word') {
@@ -121,6 +121,22 @@ specialForms.define = (args, scope) => {
   return value
 }
 
+specialForms.set = (args, env) => {
+  if (args.length !== 2 || args[0].type !== 'word') {
+    throw new SyntaxError('Bad use of set')
+  }
+  const varName = args[0].name
+  const value = evaluate(args[1], env)
+
+  for (let scope = env; scope; scope = Object.getPrototypeOf(scope)) {
+    if (Object.prototype.hasOwnProperty.call(scope, varName)) {
+      scope[varName] = value
+      return value
+    }
+  }
+  throw new ReferenceError(`Setting undefined variable ${varName}`)
+}
+
 export const topScope = Object.create(null)
 
 topScope.true = true
@@ -135,7 +151,7 @@ topScope.print = value => {
   return value
 }
 
-export function run (program) {
+export function run(program) {
   return evaluate(parse(program), Object.create(topScope))
 }
 
@@ -151,7 +167,7 @@ specialForms.fun = (args, scope) => {
     return expr.name
   })
 
-  return function () {
+  return function() {
     if (arguments.length !== params.length) {
       throw new TypeError('Wrong number of arguments')
     }
