@@ -1,0 +1,18 @@
+document.getElement -> root node
+document.body -> child node
+each DOM node has nodeType property -> identifies type of node
+
+
+#in javascript
+firstChild and lastChild properties points to the first and last chile elements or null if no child nodes
+previousSibbing and nextSibbling points to the adjacent nodes of the same parent node
+
+###
+elements that take up the whole width of the document are called the block elements such as <p>, <h2>
+---others such as <a>(links), <strong> are rendered on the same line with their surrounding text are inline elements
+ 
+###
+ element attributes can be accessed through a property of the same name on the element's DOM object
+---if working on own attributes names, those attributes will not be in the properties of element node so at that case have to use getAttribute and setAttribute
+event handlers---- window.addEventListner(action, callback)
+-----Webworkers

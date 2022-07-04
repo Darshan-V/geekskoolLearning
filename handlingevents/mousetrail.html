@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>mousetrail</title>
+</head>
+
+<body>
+
+  <style>
+    .trail {
+      content: "";
+      width: 20px;
+      height: 20px;
+      position: absolute;
+      border: 8px solid peru;
+      border-radius: 50%;
+      opacity: .5;
+      top: -8px;
+      left: -8px;
+      animation: cursorAnim2 .5s infinite alternate;
+    }
+
+    body {
+      height: 300px;
+    }
+  </style>
+
+  <script>
+    let dots = []
+    for (let i = 10; i < 50; i++) {
+      let node = document.createElement('div')
+      node.className = 'trail'
+      document.body.appendChild(node)
+      dots.push(node)
+    }
+    let currentdot = 0
+    window.addEventListener("mousemove", event => {
+      let dot = dots[currentdot]
+      dot.style.left = (event.clientX - 1) + "px";
+      dot.style.top = (event.clientY - 1) + "px";
+      currentdot = (currentdot + 1) % dots.length
+    })
+  </script>
+
+</body>
+
+</html>
